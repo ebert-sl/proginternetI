@@ -1,4 +1,4 @@
-# proginternetI
+# Programação para Internet
 
 Instituto Federal do Piauí
 
