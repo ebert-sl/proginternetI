@@ -6,29 +6,29 @@ from bs4 import BeautifulSoup
 saved_links = []
 
 def search(keyword, url, depth):
-  requests_cache.install_cache('url_cache')
+  requests_cache.install_cache('url_cache') 
   response = requests.get(url)
 
-  soup = BeautifulSoup(response.text, 'html.parser')
-  headers = soup.find_all(string=re.compile(keyword))
+  soup = BeautifulSoup(response.text, 'html.parser') 
+  find_keyword = soup.find_all(string=re.compile(keyword))
   
   print(" ")
   print("Nível 0")
   print(" ")
   print("----- ", url, " -----")
   
-  if(headers == []):
+  if(search_keyword == []):
     print("O termo não foi encontrado aqui.")
     print(" ")
   else:
-    for header in headers:
-      start_keyword = re.search(keyword, header).start()
-      end_keyword = re.search(keyword, header).end()
+    for result in find_keyword:
+      start_keyword = re.search(keyword, result).start()
+      end_keyword = re.search(keyword, result).end()
       if start_keyword <= 19:
-        print(header[0 : end_keyword + 20])
+        print(word[0 : end_keyword + 20])
       else:
-        print(header[start_keyword - 20 : end_keyword + 20])
-    print(" ")
+        print(word[start_keyword - 20 : end_keyword + 20])
+      print(" ")
   
   links = soup.find_all('a')
   save_links = []
@@ -52,19 +52,19 @@ def search(keyword, url, depth):
         response = requests.get(saved_link)
 
         soup = BeautifulSoup(response.text, 'html.parser')
-        headers = soup.find_all(string=re.compile(keyword))
+        find_keyword = soup.find_all(string=re.compile(keyword))
 
-        if(headers == []):
+        if(find_keyword == []):
           print("O termo não foi encontrado aqui.")
           print(" ")
         else:
-          for header in headers:
-            start_keyword = re.search(keyword, header).start()
-            end_keyword = re.search(keyword, header).end()
+          for result in find_keyword:
+            start_keyword = re.search(keyword, result).start()
+            end_keyword = re.search(keyword, result).end()
             if start_keyword <= 19:
-              print(header[0 : end_keyword + 20])
+              print(word[0 : end_keyword + 20])
             else:
-              print(header[start_keyword - 20 : end_keyword + 20])
+              print(word[start_keyword - 20 : end_keyword + 20])
           print(" ")
           
           try:
@@ -78,5 +78,3 @@ def search(keyword, url, depth):
             continue
 
       counter = counter + 1
-
-search("Effects", "https://tholman.com/cursor-effects/", 2)
